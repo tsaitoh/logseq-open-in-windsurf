@@ -1,5 +1,5 @@
 {
-  "name": "logseq-open-in-code",
+  "name": "logseq-open-in-windsurf",
   "version": "0.0.7",
   "main": "dist/index.html",
   "author": "rebornix",
@@ -18,8 +18,8 @@
     "@vitejs/plugin-vue": "2.0.0"
   },
   "logseq": {
-    "id": "logseq-open-in-code",
+    "id": "logseq-open-in-windsurf",
     "icon": "./icon.png",
-    "title": "Open in VS Code"
+    "title": "Open in Windsurf"
   }
 }

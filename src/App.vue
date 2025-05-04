@@ -17,8 +17,8 @@
 const __debug = false;
 
 function generateUrl(path, line = 0, row = 999, new_window = true) {
-  const { distro } = logseq.settings;
-  const protocol = distro === "stable" ? "vscode" : distro === "insiders" ? "vscode-insiders" : "vscodium";
+  // Windsurf always uses the 'windsurf' protocol
+  const protocol = "windsurf";
 
   const lineRow = line ? `:${line}:${row}` : "";
 
@@ -218,7 +218,7 @@ async function openPageInVSCode() {
 async function registerShortcuts() {
   logseq.App.registerCommandPalette({
     key: `Open_current_line_in_default_editor`,
-    label: "Open current line in default editor",
+    label: "Open current line in Windsurf",
     keybinding: {
       binding: logseq.settings.key_open_line,
       mode: "global",
@@ -228,7 +228,7 @@ async function registerShortcuts() {
   );
   logseq.App.registerCommandPalette({
     key: `Open_current_page_in_default_editor`,
-    label: "Open current page in default editor",
+    label: "Open current page in Windsurf",
     keybinding: {
       binding: logseq.settings.key_open_page,
       mode: "global",
@@ -239,7 +239,7 @@ async function registerShortcuts() {
 
   logseq.App.registerCommandPalette({
     key: `Open_graph_folder_in_default_editor`,
-    label: "Open graph folder in default editor",
+    label: "Open graph folder in Windsurf",
     keybinding: {
       binding: logseq.settings.key_open_graph,
       mode: "global",
@@ -294,7 +294,7 @@ export default {
 
     logseq.on("ui:visible:changed", ({ visible }) => {
       if (visible) {
-        const el = top.document.querySelector(`a#open-in-code-anchor`);
+        const el = top.document.querySelector(`a#open-in-windsurf-anchor`);
         const rect = el.getBoundingClientRect();
         this.left = rect.left - 50;
         this.top = rect.top + 30;
