@@ -1,8 +1,8 @@
 {
   "name": "logseq-open-in-windsurf",
-  "version": "0.0.7",
+  "version": "0.0.1",
   "main": "dist/index.html",
-  "author": "rebornix",
+  "author": "tsaitoh",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
