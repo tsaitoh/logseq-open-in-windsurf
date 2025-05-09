@@ -1,44 +1,47 @@
-name: Build plugin
+name: Publish Logseq Plugin
 
 on:
   workflow_dispatch:
   push:
-    # Sequence of patterns matched against refs/tags
     tags:
-      - "*" # Push events to matching any tag format, i.e. 1.0, 20.15.10
+      - "*"
 
 env:
   PLUGIN_NAME: logseq-open-in-windsurf
 
 jobs:
-  build:
+  build-and-release:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
       - name: Use Node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
-          node-version: "16.x" # You might need to adjust this value to your own version
-      - name: Build
-        id: build
+          node-version: '18'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Build plugin
+        run: yarn build
+
+      - name: Prepare release assets
         run: |
-          npm install -g yarn
-          yarn
-          yarn build
           mkdir ${{ env.PLUGIN_NAME }}
-          cp README.md package.json icon.png demo.gif ${{ env.PLUGIN_NAME }}
-          mv dist ${{ env.PLUGIN_NAME }}
+          cp README.md package.json icon.png ${{ env.PLUGIN_NAME }} || true
+          if [ -f demo.gif ]; then cp demo.gif ${{ env.PLUGIN_NAME }}/; fi
+          if [ -d dist ]; then mv dist ${{ env.PLUGIN_NAME }}/; fi
           zip -r ${{ env.PLUGIN_NAME }}.zip ${{ env.PLUGIN_NAME }}
-          ls
-          echo "tag_name=$(git tag --sort version:refname | tail -n 1)" >> $GITHUB_OUTPUT
-      - name: Create Release and Upload Assets
+
+      - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
-        id: create_release
+        with:
+          files: ${{ env.PLUGIN_NAME }}.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          draft: false
           prerelease: false
           files: |
             ./${{ env.PLUGIN_NAME }}.zip
