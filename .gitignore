@@ -1,6 +1,8 @@
 node_modules
 .DS_Store
+Thumbs.db
 dist
 dist-ssr
 *.local
-public
+*.log
+yarn-error.log
