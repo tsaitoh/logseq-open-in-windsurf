@@ -48,8 +48,8 @@ Choose where to open the specified file
 
 ## Development
 
-- Install dependencies with `npm install`
-- Build the application using `npm run build` or `npm run watch`
+- Install dependencies with `yarn install`
+- Build the application using `yarn build` or `yarn watch`
 - Load the plugin in the Logseq Desktop client using the `Load unpacked plugin` option.
 
 ## Acknowledgments
