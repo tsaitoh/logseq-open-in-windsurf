@@ -39,12 +39,11 @@ jobs:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
-          files: ${{ env.PLUGIN_NAME }}.zip
+          files: |
+            ${{ env.PLUGIN_NAME }}.zip
+            package.json
+          prerelease: false
+          name: Release ${{ github.ref_name }}
+          tag_name: ${{ github.ref_name }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          prerelease: false
-          files: |
-            ./${{ env.PLUGIN_NAME }}.zip
-            ./package.json
-          name: Release ${{ steps.build.outputs.tag_name }}
-          tag_name: ${{ steps.build.outputs.tag_name }}
